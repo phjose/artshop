@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+<div class="container-fluid py-5 taco" style="background-image: url(/../../media/background/bg-main-image-gallery.jpg);">
+    <div class="container-fluid my-0 taco-espacio"></div>
+    <div class="container-fluid my-5 text-center taco-text">
+        <div class="row"></div>
+            <div class="col align-self-center"><h2 class="user-select-none">GALERÍA</h2></div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid my-3" style="overflow: hidden;">
+    <!--<div class="row row-cols-2 row-cols-md-4 mx-2 p-2 justify-content-center border border-warning">-->
+        <div class="grid">
+        {% for painting in paintings_p %}
+            <div class="grid-item">
+            {% if painting.image %}
+                <a href="{% url 'store:painting_detail' painting.pk %}">
+                    <img class="img-fluid object-fit-cover rounded gallery-img" src="{{ painting.image.url }}" alt="{{ painting }}">
+                </a>
+            {% else %}
+                <a href="#">
+                    <img class="img-fluid object-fit-cover rounded gallery-img" src="https://picsum.photos/900/500.jpg" alt="no image">
+                </a>
+            {% endif %}
+            </div>
+        {% endfor%}
+        </div>
+</div>
+{% if pagination %}
+<section>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            
+            {% if paintings_p.has_previous %}
+            <li class="">
+                <a class="btn" href="{% url 'store:gallery' paintings_p.previous_page_number %}" method="POST" role="button">PREV</a>
+            </li>
+            {% endif %}
+            
+            {% for i in nums %}
+                {% if forloop.counter == paintings_p.number %}
+                    <li class=""><a class="btn disabled" href="{% url 'store:gallery' forloop.counter %}" role="button" aria-disabled="true">{{ forloop.counter }}</a></li>
+                {% else %}
+                    <li class=""><a class="btn" href="{% url 'store:gallery' forloop.counter %}" role="button">{{ forloop.counter }}</a></li>
+                {% endif %}
+            {% endfor %}
+            
+            {% if paintings_p.has_next %}
+            <li class="">
+                <a class="btn" href="{% url 'store:gallery' paintings_p.next_page_number %}" role="button">NEXT</a>
+            </li>
+            {% endif %}
+
+        </ul>
+    </nav>
+</section>
+{% endif %}
+{% endblock %}

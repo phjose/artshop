@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+<div class="container-fluid py-5 taco" style="background-image: url(/../../media/background/bg-main-image-artist.jpg);">
+    <div class="container-fluid my-0 taco-espacio"></div>
+    <div class="container-fluid my-5 text-center taco-text">
+        <div class="row">
+            <div class="col align-self-center"><h2 class="user-select-none"></h2></div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid my-3" style="overflow: hidden;">
+    {% if searched %}
+        {% if artists or paintings %}
+            {% if artists %}
+            <div class="row row-cols-2 row-cols-md-4 mx-2 p-2 justify-content-center">
+                {% for artist in artists %}
+                <div class="p-1 my-2">
+                    {% if artist.image %}
+                    <!--<img class="img-fluid rounded-5 artist-img border border-black" src="{{ artist.image.url }}" alt="{{ artist }}">-->
+                    <a href="{% url 'store:artist_detail' artist.pk %}">
+                        <img class="img-fluid object-fit-cover rounded" src="{{ artist.image.url }}" alt="{{ artist }}">
+                    </a>
+                    {% else %}
+                    <img class="img-fluid object-fit-cover rounded" src="/../../media/background/bg-main-image-artist.jpg" alt="no image">
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% if paintings %}
+            <section class="py-1">
+                <div class="container px-4 px-lg-5 mt-3 text-center">
+                    {% if artists %}
+                    <h3 class="fw-bolder mb-4 border-bottom border-dark"></h3>
+                    {% endif %}
+                    <div class="grid">
+                    {% for painting in paintings %}
+                        <div class="grid-item">
+                        {% if painting.image %}
+                            <a href="{% url 'store:painting_detail' painting.pk %}">
+                                <img class="img-fluid object-fit-cover rounded gallery-img" src="{{ painting.image.url }}" alt="{{ painting }}">
+                            </a>
+                        {% else %}
+                            <a href="#">
+                                <img class="img-fluid object-fit-cover rounded gallery-img" src="https://picsum.photos/900/500.jpg" alt="no image">
+                            </a>
+                        {% endif %}
+                        </div>
+                    {% endfor%}
+                    </div>
+                </div>
+            </section>
+            {% endif %}
+        {% else %}
+            <div class="row mx-1 text-center border-top border-bottom">
+                <p>NO SE HAN ENCONTRADO RESULTADOS</p>
+            </div>
+        {% endif %}
+    {% else %}
+        <div class="row mx-1 text-center border-top border-bottom">
+            <p>BÚSQUEDA VACÍA</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

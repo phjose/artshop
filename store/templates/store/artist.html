@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+<div class="container-fluid py-5 taco" style="background-image: url(/../../media/background/bg-main-image-artist.jpg);">
+    <div class="container-fluid my-0 taco-espacio"></div>
+    <div class="container-fluid my-5 text-center taco-text">
+        <div class="row"></div>
+            <div class="col align-self-center"><h2 class="user-select-none">ARTISTAS</h2></div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid my-3" style="overflow: hidden;">
+    <div class="row row-cols-2 row-cols-md-4 mx-1 p-0 g-1 justify-content-center">
+        {% for artist in artists %}
+        <div class="mx-1 my-1 p-0" style="width: 200px">
+            {% if artist.image %}
+            <!--<img class="img-fluid rounded-5 artist-img border border-black" src="{{ artist.image.url }}" alt="{{ artist }}">-->
+            <a href="{% url 'store:artist_detail' artist.pk %}">
+                <img class="img-fluid object-fit-cover rounded" src="{{ artist.image.url }}" alt="{{ artist }}">
+            </a>
+            {% else %}
+            <img class="img-fluid object-fit-cover rounded" src="/../../media/background/bg-main-image-artist.jpg" alt="no image">
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock%}

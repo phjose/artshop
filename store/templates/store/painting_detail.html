@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+<div class="container-fluid py-5 taco" style="background-image: url(/../../media/background/bg-main-image-gallery.jpg);">
+    <div class="container-fluid my-0 taco-espacio"></div>
+    <div class="container-fluid my-5 text-center taco-text">
+        <div class="row"></div>
+            <div class="col align-self-center">
+                <!--<h2 class="user-select-none">GALERÍA</h2>-->
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container px-4 px-lg-5 my-5">
+    <div class="row gx-4 gx-lg-5">
+        <div class="col-md-5 border-end">
+            <figure class="figure">
+                {% if painting.image %}
+                <img class="figure-img img-fluid rounded"  src="{{ painting.image.url }}" alt="{{ painting }}" id="zoom"/>
+                <!--</a>-->
+                {% else %}
+                <img class="figure-img img-fluid rounded" src="https://dummyimage.com/600x700/dee2e6/6c757d.jpg" alt="..." />
+                {% endif %}
+            </figure>
+        </div>
+        <div class="col-md-6 rounded">
+            <h1 class="display-5 fw-bolder">{{ painting|title }}</h1>
+            <hr class="hr" />
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <a href="{% url 'store:artist_detail' painting.artist.pk%}" class="link-secondary link-offset-2 link-underline-opacity-0 link-underline-opacity-50-hover">
+                        <h4>{{painting.artist|title}}</h4>
+                    </a>
+                </li>
+                <li class="list-group-item">{{painting.pub_date}}</li>
+                <li class="list-group-item">{{painting.technique}} en {{painting.support}}</li>
+                <li class="list-group-item">{{painting.pheight}} x {{painting.pwidth}} (cm)</li>
+                {% if painting.description %}
+                <li class="list-group-item">{{painting.description|default_if_none:""}}</li>
+                {% endif %}
+                <!-- la pintura se muestra si tiene la marca de availabe o se puede poner si el precio != 0 -->
+                {% if painting.available %}
+                <li id="addCartItem" class="list-group-item">
+                    <a href="#" id="addCart" class="link-secondary link-offset-2 link-underline-opacity-0 link-underline-opacity-50-hover"
+                       role="button" data-painting-id="{{ painting.id }}" data-bs-toggle="modal" data-bs-target="#cartModal">
+                       <h4>Precio: {{painting.price}} €</h4>
+                    </a>
+                </li>
+
+                <!-- Modal -->
+                <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header text-center">
+                                <h4>Incluido en la cesta</h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body text-center">
+                                Al tratarse de obras originales y únicas, es necesario comprobar la disponibilidad antes del proceso de pago.
+                            </div>
+                            <div class="modal-footer">
+                                <a href="{% url 'store:gallery' 1 %}" type="button" class="btn btn-outline-dark">galería</a>
+                                <a href="{% url 'cart:cart_summary' %}" type="button" class="btn btn-outline-dark">cesta</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal -->
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- Related items section-->
+{% if related_paintings %}
+<section class="py-1">
+    <div class="container px-4 px-lg-5 mt-3 text-center">
+        <h3 class="fw-bolder mb-4 border-bottom border-dark">OTRAS OBRAS</h3>
+        <div class="grid">
+        {% for painting in related_paintings %}
+            <div class="grid-item">
+            {% if painting.image %}
+                <a href="{% url 'store:painting_detail' painting.pk %}">
+                    <img class="img-fluid object-fit-cover rounded gallery-img" src="{{ painting.image.url }}" alt="{{ painting }}">
+                </a>
+            {% else %}
+                <a href="#">
+                    <img class="img-fluid object-fit-cover rounded gallery-img" src="https://picsum.photos/900/500.jpg" alt="no image">
+                </a>
+            {% endif %}
+            </div>
+        {% endfor%}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<script>
+    var csrftoken = '{{csrf_token}}'
+    var url_add = "{%url 'cart:cart_add' %}"
+</script>
+
+{% endblock %}

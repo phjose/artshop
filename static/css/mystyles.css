@@ -1,0 +1,190 @@
+body {
+  /*font-family: 'Josefin Slab', serif;*/
+  font-family: 'Ysabeau Office', sans-serif;
+}
+
+#mainNav {
+  font-size: 1.1rem;
+}
+
+#mainNav.navbar-shrink {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  background-color: #fff;
+}
+
+#mainNav.navbar-shrink .navbar-brand {
+  color: #212529;
+}
+
+#mainNav.navbar-shrink .navbar-brand:hover {
+  color: #f4623a;
+}
+
+#mainNav.navbar-shrink .navbar-nav .nav-item .nav-link {
+  color: #212529;
+  font-weight: 400;
+}
+
+#mainNav.navbar-shrink .navbar-nav .nav-item .disabled {
+  color: rgba(33, 37, 41, .25);
+}
+
+#mainNav.navbar-shrink .navbar-nav .nav-item .nav-link:hover {
+  color: #f4623a;
+}
+
+.nav-link {
+  font-size: 1.2rem;
+  /*font-style: italic;*/
+  font-weight: 700;
+  .badge {
+    font-size: 0.55rem;
+  }
+}
+
+.nav-link:hover {
+  color: #fff;
+}
+
+.burrito {
+  height: 400px;
+  width: wv;
+  vertical-align: middel;
+  background-color: transparent;
+  background-size: cover;
+}
+
+.taco {
+  height: 230px;
+  vertical-align: middel;
+  background-color: transparent;
+  background-size: cover;
+  opacity: 0.9;
+}
+
+.taco-espacio {
+  height: 75px;
+}
+
+.taco-text {
+  height: 40px;
+}
+
+.burrito-footer {
+  vertical-align: middel;
+  background-color: transparent;
+  background-size: cover;
+  opacity: 1;
+  font-weight: 400;
+}
+
+.grid {
+  margin: 1rem auto;
+}
+
+.grid-item {
+  width: 23%;
+  height: auto;
+  margin: 0.3rem;
+  img {
+    width: 100%;
+  }
+}
+
+.artist-img {
+  background-size: cover;
+  opacity: 0.75;
+}
+
+.artist-img:hover {
+  opacity: 1;
+}
+
+.gallery-img {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  opacity: 1;
+}
+
+.gallery-img:hover {
+  opacity: 0.85;
+}
+
+.cart-image {
+  height: 100px;
+  width: 100px;
+}
+
+.painting-price {
+  font-weight: 700;
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  /*font-style: italic;*/
+  font-weight: 700;
+}
+
+.navbar-brand:hover {
+  color: #fff;
+}
+
+.artist-name .h5 {
+  text-transform: uppercase;
+}
+
+.btn-outline-dark .queso-fundido{
+  background-color: rgb(255, 255, 255, 0.2);
+}
+
+.btn-outline-dark:hover {
+  color: rgb(0, 0, 0, 1);
+  background-color: rgb(255, 255, 255, 0.5);
+}
+
+.queso-fundido{
+  background-color: rgb(255, 255, 255, 0.2);
+}
+
+.footer-link {
+  color: #212529;
+  text-decoration: none;
+}
+
+
+/* Cookies */
+.subcontainer {
+  width: 85%;
+  margin: auto;
+}
+
+#cookies {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 1;
+  display: none;
+}
+
+.cookies {
+  min-height: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 1.3rem;
+}
+
+/*#cookies-btn {
+  color: white;
+  border-radius: 5px;
+  padding: 8px 12px 8px 12px;
+  font-size: 1rem;
+  font-family: inherit;
+  cursor: pointer;
+  border: 3px solid white;
+  background-color: black;
+}*/
+/* Cookies */
