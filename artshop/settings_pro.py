@@ -19,7 +19,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'store',
     'members',
-    'populate',
     'cart',
 ]
 
