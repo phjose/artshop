@@ -176,3 +176,4 @@ cython_debug/
 # Propias
 task.txt
 populate/
+artshop/settings_dev.py
