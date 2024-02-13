@@ -1,12 +1,11 @@
 from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404
 
-from artshop import settings_dev
 from store.models import Painting, Artist
 
 
 def index(request):
-    context = {'debug': settings_dev.DEBUG, }
+    context = {}
     return render(request, 'store/index.html', context)
 
 
