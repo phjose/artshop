@@ -55,7 +55,7 @@ body {
 }
 
 .taco {
-  height: 230px;
+  height: 170px;
   vertical-align: middel;
   background-color: transparent;
   background-size: cover;
@@ -63,7 +63,7 @@ body {
 }
 
 .taco-espacio {
-  height: 75px;
+  height: 25px;
 }
 
 .taco-text {
