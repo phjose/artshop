@@ -50,7 +50,7 @@ class TestArtistModel(TestCase):
         self.assertEqual(str(test), 'luis')
 
 
-@skip("skip this")
+# @skip("skip this")
 class TestPaintingModel(TestCase):
 
     def setUp(self):
