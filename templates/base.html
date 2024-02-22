@@ -35,22 +35,22 @@
                         aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <a class="navbar-brand me-5" href="{% url 'store:index' %}">LA ACADEMIA</a>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item me-2">
+                <a class="navbar-brand me-2" href="{% url 'store:index' %}">LA ACADEMIA</a>
+                <div class="collapse navbar-collapse pt-2" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
+                        <li class="nav-item me-1">
                             <a class="nav-link" href="{% url 'store:gallery' 1 %}">GALERÍA</a>
                         </li>
-                        <li class="nav-item me-2">
+                        <li class="nav-item me-1">
                             <a class="nav-link" href="{% url 'store:artist' %}">ARTISTAS</a>
                         </li>
-                        <li class="nav-item me-2">
+                        <li class="nav-item me-1">
                             <a class="nav-link disabled" href="{% url 'store:process' %}">PROCESO</a>
                         </li>
-                        <li class="nav-item me-2">
+                        <li class="nav-item me-5">
                             <a class="nav-link disabled" href="{% url 'store:news' %}">NOVEDADES</a>
                         </li>
-                        <li class="nav-item me-2">
+                        <li class="nav-item me-1">
                             <a class="nav-link" href="{% url 'cart:cart_summary' %}">
                                 <span class="material-symbols-outlined position-relative">shopping_bag
                                     <span class="position-absolute top-100 start-100 translate-middle badge rounded-circle text-bg-secondary" style="bottom: -17.9px;">
@@ -58,8 +58,20 @@
                                     </span>
                                 </span>
                             </a>
-
                         </li>
+                        {% if user.is_authenticated %}
+                        <li class="nav-item me-1">
+                            <a class="nav-link" href="{% url 'store:logout' %}">
+                                <span class="material-symbols-outlined">account_circle</span>
+                            </a>
+                        </li>
+                        {% else %}
+                        <li class="nav-item me-1">
+                            <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">
+                                <span class="material-symbols-outlined">account_circle_off</span>
+                            </a>
+                        </li>
+                        {% endif %}
                         <!--<li class="nav-item dropdown me-2">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 MAS...
@@ -72,17 +84,24 @@
                             </ul>
                         </li>-->
                     </ul>
-                    <form class="d-flex" role="search" method="POST" action="{% url 'store:search' %}">
+                    <form class="d-flex mt-3" role="search" method="POST" action="{% url 'store:search' %}">
                         {% csrf_token %}
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="searched">
-                        <button class="btn btn-outline-dark" type="submit">BUSCAR</button>
+                        <div class="input-group input-group-sm mb-3">
+                            <input type="search" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="button-addon2" name="searched">
+                            <button class="btn btn-outline-dark" type="submit" id="button-addon2">
+                                <span class="material-symbols-outlined">
+                                    search
+                                </span>
+                            </button>
+                        </div>
+                        <!--<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="searched">
+                        <button class="btn btn-outline-dark" type="submit">BUSCAR</button>-->
                     </form>
                 </div>
             </div>
         </nav>
     </div>
     <!-- NAVBAR -->
-
     {% block page_content %}
 
     {% endblock page_content %}
@@ -124,6 +143,36 @@
             </div>
         </div>
     </div>
+    <!-- Cookies -->
+
+    <!-- Modals -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">LOGIN</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="m-3" method="POST" action="{% url 'store:login' %}">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <input type="text" class="form-control" name="username" placeholder="Nombre de usuario">
+                        </div>
+                        <div class="mb-3">
+                            <input type="password" class="form-control" name="password" placeholder="password">
+                        </div>
+                        <button type="submit" class="btn btn-secondary">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+
+
+
 
     <!-- jQuery -->
     <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>-->

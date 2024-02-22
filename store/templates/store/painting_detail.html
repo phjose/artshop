@@ -5,9 +5,8 @@
     <div class="container-fluid my-0 taco-espacio"></div>
     <div class="container-fluid my-5 text-center taco-text">
         <div class="row"></div>
-            <div class="col align-self-center">
-                <!--<h2 class="user-select-none">GALERÍA</h2>-->
-            </div>
+        <div class="col align-self-center">
+            <!--<h2 class="user-select-none">GALERÍA</h2>-->
         </div>
     </div>
 </div>
@@ -46,26 +45,6 @@
                        <h4>Precio: {{painting.price}} €</h4>
                     </a>
                 </li>
-
-                <!-- Modal -->
-                <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header text-center">
-                                <h4>Incluido en la cesta</h4>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body text-center">
-                                Al tratarse de obras originales y únicas, es necesario comprobar la disponibilidad antes del proceso de pago.
-                            </div>
-                            <div class="modal-footer">
-                                <a href="{% url 'store:gallery' 1 %}" type="button" class="btn btn-outline-dark">galería</a>
-                                <a href="{% url 'cart:cart_summary' %}" type="button" class="btn btn-outline-dark">cesta</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Modal -->
                 {% endif %}
             </ul>
         </div>
@@ -94,6 +73,26 @@
     </div>
 </section>
 {% endif %}
+
+<!-- Modal -->
+<div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4>Incluido en la cesta</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                Al tratarse de obras originales y únicas, es necesario comprobar la disponibilidad antes del proceso de pago.
+            </div>
+            <div class="modal-footer">
+                <a href="{% url 'store:gallery' 1 %}" type="button" class="btn btn-outline-dark">galería</a>
+                <a href="{% url 'cart:cart_summary' %}" type="button" class="btn btn-outline-dark">cesta</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
 
 <script>
     var csrftoken = '{{csrf_token}}'

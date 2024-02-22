@@ -1,5 +1,7 @@
 from django.core.paginator import Paginator
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
 
 from store.models import Painting, Artist
 
@@ -91,3 +93,30 @@ def painting_detail(request, pk):
 
     context = {'painting': painting, 'related_paintings': related_paintings, }
     return render(request, 'store/painting_detail.html', context)
+
+
+def login_user(request):
+
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['password']
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            # messages.success(request, "Log in correcto!.")
+            return redirect('store:gallery', page=1)
+        else:
+            # messages.error(request, "Usuario o password no encontrados")
+            return redirect('store:login')
+    else:
+        return render(request, 'store/index.html')
+
+
+def logout_user(request):
+
+    context = {}
+    logout(request)
+    # messages.success(request, "You have been logged out.")
+    return redirect('store:index')

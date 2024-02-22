@@ -12,4 +12,6 @@ urlpatterns = [
     path('future/', views.future, name='future'),
     path('news/', views.news, name='news'),
     path('searched/', views.search, name='search'),
+    path('login/', views.login_user, name='login'),
+    path('logout/', views.logout_user, name='logout'),
 ]

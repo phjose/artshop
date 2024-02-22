@@ -5,11 +5,18 @@
     <div class="container-fluid my-0 taco-espacio"></div>
     <div class="container-fluid my-5 text-center taco-text">
         <div class="row"></div>
-            <div class="col align-self-center"><h2 class="user-select-none">GALERÍA</h2></div>
-        </div>
+        <div class="col align-self-center"><h2 class="user-select-none">GALERÍA</h2></div>
     </div>
 </div>
 <div class="container-fluid my-3" style="overflow: hidden;">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
     <!--<div class="row row-cols-2 row-cols-md-4 mx-2 p-2 justify-content-center border border-warning">-->
         <div class="grid">
         {% for painting in paintings_p %}
@@ -34,7 +41,7 @@
             
             {% if paintings_p.has_previous %}
             <li class="">
-                <a class="btn" href="{% url 'store:gallery' paintings_p.previous_page_number %}" method="POST" role="button">PREV</a>
+                <a class="btn" href="{% url 'store:gallery' paintings_p.previous_page_number %}" role="button">PREV</a>
             </li>
             {% endif %}
             
