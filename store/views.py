@@ -25,7 +25,7 @@ def gallery(request, page):
 
 def artist(request):
     artists = Artist.objects.order_by('user__username')
-    context = {'artists': artists, }
+    context = {'artists': artists, 'session': request.session, }
     return render(request, 'store/artist.html', context)
 
 

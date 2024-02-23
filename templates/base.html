@@ -62,13 +62,13 @@
                         {% if user.is_authenticated %}
                         <li class="nav-item me-1">
                             <a class="nav-link" href="{% url 'store:logout' %}">
-                                <span class="material-symbols-outlined">account_circle</span>
+                                <span class="material-symbols-outlined">logout</span>
                             </a>
                         </li>
                         {% else %}
                         <li class="nav-item me-1">
                             <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">
-                                <span class="material-symbols-outlined">account_circle_off</span>
+                                <span class="material-symbols-outlined">login</span>
                             </a>
                         </li>
                         {% endif %}
