@@ -35,8 +35,8 @@
                         aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <a class="navbar-brand me-2" href="{% url 'store:index' %}">LA ACADEMIA</a>
-                <div class="collapse navbar-collapse pt-2" id="navbarSupportedContent">
+                <a class="navbar-brand me-1" href="{% url 'store:index' %}">LA ACADEMIA</a>
+                <div class="collapse navbar-collapse pt-1" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
                         <li class="nav-item me-1">
                             <a class="nav-link" href="{% url 'store:gallery' 1 %}">GALERÍA</a>
@@ -50,15 +50,8 @@
                         <li class="nav-item me-5">
                             <a class="nav-link disabled" href="{% url 'store:news' %}">NOVEDADES</a>
                         </li>
-                        <li class="nav-item me-1">
-                            <a class="nav-link" href="{% url 'cart:cart_summary' %}">
-                                <span class="material-symbols-outlined position-relative">shopping_bag
-                                    <span class="position-absolute top-100 start-100 translate-middle badge rounded-circle text-bg-secondary" style="bottom: -17.9px;">
-                                        <p class="m-0 p-0" id="cartQuantity">{{ cart|length }}</p>
-                                    </span>
-                                </span>
-                            </a>
-                        </li>
+                    </ul>
+                    <ul class="navbar-nav me-2 mb-2 mb-lg-0">
                         {% if user.is_authenticated %}
                         <li class="nav-item me-1">
                             <a class="nav-link" href="{% url 'store:logout' %}">
@@ -72,35 +65,26 @@
                             </a>
                         </li>
                         {% endif %}
-                        <!--<li class="nav-item dropdown me-2">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                MAS...
-                            </a>
-                            <ul class="dropdown-menu me-2">
-                                <li><a class="dropdown-item" href="#">contacto</a></li>
-                                <li><a class="dropdown-item" href="#"></a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                            </ul>
-                        </li>-->
-                    </ul>
-                    <form class="d-flex mt-3" role="search" method="POST" action="{% url 'store:search' %}">
-                        {% csrf_token %}
-                        <div class="input-group input-group-sm mb-3">
-                            <input type="search" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="button-addon2" name="searched">
-                            <button class="btn btn-outline-dark" type="submit" id="button-addon2">
-                                <span class="material-symbols-outlined">
-                                    search
+                        <li class="nav-item me-1">
+                            <a class="nav-link" href="{% url 'cart:cart_summary' %}">
+                                <span class="material-symbols-outlined position-relative">shopping_bag
+                                    <span class="position-absolute top-100 start-100 translate-middle badge rounded-circle text-bg-secondary" style="bottom: -17.9px;">
+                                        <p class="m-0 p-0" id="cartQuantity">{{ cart|length }}</p>
+                                    </span>
                                 </span>
-                            </button>
-                        </div>
-                        <!--<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="searched">
-                        <button class="btn btn-outline-dark" type="submit">BUSCAR</button>-->
-                    </form>
+                            </a>
+                        </li>
+                        <li class="nav-item me-1">
+                            <a class="nav-link" id="search" href="#" data-bs-toggle="modal" data-bs-target="#searchModal">
+                                <span class="material-symbols-outlined">search</span>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </nav>
     </div>
+
     <!-- NAVBAR -->
     {% block page_content %}
 
@@ -163,6 +147,21 @@
                             <input type="password" class="form-control" name="password" placeholder="password">
                         </div>
                         <button type="submit" class="btn btn-secondary">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form class="m-3" method="POST" action="{% url 'store:search' %}">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <input id="searchInput" type="text" class="form-control" name="searched" placeholder="Introducte tu busqueda">
+                        </div>
                     </form>
                 </div>
             </div>
