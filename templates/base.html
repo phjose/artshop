@@ -53,19 +53,24 @@
                     </ul>
                     <ul class="navbar-nav me-2 mb-2 mb-lg-0">
                         {% if user.is_authenticated %}
-                        <li class="nav-item me-1">
+                        <li class="nav-item">
                             <a class="nav-link" href="{% url 'store:logout' %}">
                                 <span class="material-symbols-outlined">logout</span>
                             </a>
                         </li>
                         {% else %}
-                        <li class="nav-item me-1">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'store:register' %}">
+                                <span class="material-symbols-outlined">person_add</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">
                                 <span class="material-symbols-outlined">login</span>
                             </a>
                         </li>
                         {% endif %}
-                        <li class="nav-item me-1">
+                        <li class="nav-item">
                             <a class="nav-link" href="{% url 'cart:cart_summary' %}">
                                 <span class="material-symbols-outlined position-relative">shopping_bag
                                     <span class="position-absolute top-100 start-100 translate-middle badge rounded-circle text-bg-secondary" style="bottom: -17.9px;">
@@ -75,7 +80,7 @@
                             </a>
                         </li>
                         <li class="nav-item me-1">
-                            <a class="nav-link" id="search" href="#" data-bs-toggle="modal" data-bs-target="#searchModal">
+                            <a class="nav-link" data-bs-toggle="offcanvas" href="#offcanvasSearch" role="button" aria-controls="offcanvasSearch">
                                 <span class="material-symbols-outlined">search</span>
                             </a>
                         </li>
@@ -130,11 +135,11 @@
     <!-- Cookies -->
 
     <!-- Modals -->
-    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header text-center">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">LOGIN</h1>
+                    <h1 class="modal-title fs-5" id="loginModalLabel">LOGIN</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -153,18 +158,14 @@
         </div>
     </div>
 
-    <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <form class="m-3" method="POST" action="{% url 'store:search' %}">
-                        {% csrf_token %}
-                        <div class="mb-3">
-                            <input id="searchInput" type="text" class="form-control" name="searched" placeholder="Introducte tu busqueda">
-                        </div>
-                    </form>
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasSearch" aria-labelledby="offcanvasSearchLabel">
+        <div class="offcanvas-body">
+            <form class="m-3" method="POST" action="{% url 'store:search' %}">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <input id="searchInputTest" type="text" class="form-control" name="searched" placeholder="Introducte tu busqueda">
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 

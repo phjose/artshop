@@ -1,9 +1,13 @@
+from django import forms
 from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 
 from store.models import Painting, Artist
+from store.forms import SignUpForm
 
 
 def index(request):
@@ -111,12 +115,36 @@ def login_user(request):
             # messages.error(request, "Usuario o password no encontrados")
             return redirect('store:login')
     else:
-        return render(request, 'store/index.html')
+        context = {}
+        return render(request, 'store/index.html', context)
 
 
 def logout_user(request):
 
-    context = {}
     logout(request)
     # messages.success(request, "You have been logged out.")
     return redirect('store:index')
+
+
+def register_user(request):
+    form = SignUpForm()
+
+    if request.method == "POST":
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data["username"]
+            password = form.cleaned_data["password1"]
+
+            # log in user.
+            user = authenticate(request, username=username, password=password)
+            login(request, user)
+            messages.success(request, "You have register successfully and log in")
+            return redirect('store:index')
+        else:
+            messages.success(request, "You have problem, please try again.")
+            context = {}
+            return redirect('store:register')
+    else:
+        context = {'form': form, }
+        return render(request, 'store/register.html', context)

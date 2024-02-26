@@ -7,6 +7,7 @@ body {
   font-size: 1.1rem;
 }
 
+
 #mainNav.navbar-shrink {
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
   background-color: #fff;
@@ -17,7 +18,8 @@ body {
 }
 
 #mainNav.navbar-shrink .navbar-brand:hover {
-  color: #f4623a;
+  /*color: #f4623a;*/
+  /*color: #85683C;*/
 }
 
 #mainNav.navbar-shrink .navbar-nav .nav-item .nav-link {
@@ -30,7 +32,13 @@ body {
 }
 
 #mainNav.navbar-shrink .navbar-nav .nav-item .nav-link:hover {
-  color: #f4623a;
+  color: #85683C;
+}
+
+.navbar-brand {
+  font-size: 1.6rem;
+  /*font-style: italic;*/
+  font-weight: 800;
 }
 
 .nav-link {
@@ -42,8 +50,12 @@ body {
   }
 }
 
+.navbar-brand:hover {
+  /*color: #85683C;*/
+}
+
 .nav-link:hover {
-  color: #fff;
+  color: #85683C;
 }
 
 .burrito {
@@ -116,16 +128,6 @@ body {
 
 .painting-price {
   font-weight: 700;
-}
-
-.navbar-brand {
-  font-size: 1.5rem;
-  /*font-style: italic;*/
-  font-weight: 700;
-}
-
-.navbar-brand:hover {
-  color: #fff;
 }
 
 .artist-name .h5 {
