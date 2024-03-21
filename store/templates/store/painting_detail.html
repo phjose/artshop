@@ -27,7 +27,7 @@
             <hr class="hr" />
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">
-                    <a href="{% url 'store:artist_detail' painting.artist.pk%}" class="link-secondary link-offset-2 link-underline-opacity-0 link-underline-opacity-50-hover">
+                    <a href="{% url 'store:artist' painting.artist.pk%}" class="link-secondary link-offset-2 link-underline-opacity-0 link-underline-opacity-50-hover">
                         <h4>{{painting.artist|title}}</h4>
                     </a>
                 </li>
@@ -37,7 +37,7 @@
                 {% if painting.description %}
                 <li class="list-group-item">{{painting.description|default_if_none:""}}</li>
                 {% endif %}
-                <!-- la pintura se muestra si tiene la marca de availabe o se puede poner si el precio != 0 -->
+                <!-- la pintura se muestra si tiene la marca de availabe o se puede poner si el precio != 0
                 {% if painting.available %}
                 <li id="addCartItem" class="list-group-item">
                     <a href="#" id="addCart" class="link-secondary link-offset-2 link-underline-opacity-0 link-underline-opacity-50-hover"
@@ -46,6 +46,7 @@
                     </a>
                 </li>
                 {% endif %}
+                -->
             </ul>
         </div>
     </div>
@@ -54,7 +55,7 @@
 {% if related_paintings %}
 <section class="py-1">
     <div class="container px-4 px-lg-5 mt-3 text-center">
-        <h3 class="fw-bolder mb-4 border-bottom border-dark">OTRAS OBRAS</h3>
+        <h3 class="fw-bolder mb-4 pb-2 border-bottom border-dark">{{painting.artist|title}}</h3>
         <div class="grid">
         {% for painting in related_paintings %}
             <div class="grid-item">

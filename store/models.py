@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 
 class Artist(models.Model):
@@ -10,6 +11,9 @@ class Artist(models.Model):
 
     def __str__(self):
         return self.user.username
+
+    def get_absolute_url(self):
+        return reverse("store:artist", kwargs={"pk": self.pk})
 
 
 class Support(models.Model):
@@ -45,6 +49,9 @@ class Painting(models.Model):
 
     class Meta:
         ordering = ('-pub_date', )
+
+    def get_absolute_url(self):
+        return reverse('store:painting_detail', kwargs={'pk': self.pk})
 
     def __str__(self):
         return self.name

@@ -42,14 +42,14 @@
                             <a class="nav-link" href="{% url 'store:gallery' 1 %}">GALERÍA</a>
                         </li>
                         <li class="nav-item me-1">
-                            <a class="nav-link" href="{% url 'store:artist' %}">ARTISTAS</a>
+                            <a class="nav-link" href="{% url 'store:artists' %}">ARTISTAS</a>
                         </li>
-                        <li class="nav-item me-1">
+                        <!--<li class="nav-item me-1">
                             <a class="nav-link disabled" href="{% url 'store:process' %}">PROCESO</a>
                         </li>
                         <li class="nav-item me-5">
                             <a class="nav-link disabled" href="{% url 'store:news' %}">NOVEDADES</a>
-                        </li>
+                        </li>-->
                     </ul>
                     <ul class="navbar-nav me-2 mb-2 mb-lg-0">
                         {% if user.is_authenticated %}
@@ -58,19 +58,25 @@
                                 <span class="material-symbols-outlined">logout</span>
                             </a>
                         </li>
-                        {% else %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'store:register' %}">
-                                <span class="material-symbols-outlined">person_add</span>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="material-symbols-outlined">manage_accounts</span>
                             </a>
+                            <ul class="dropdown-menu">
+                                {% if user.id == 1 %}
+                                <li><a class="dropdown-item" href="{% url 'admin:index' %}">Admin</a></li>
+                                {% endif %}
+                                <li><a class="dropdown-item" href="#">User: {{ user }}</a></li>
+                            </ul>
                         </li>
+                        {% else %}
                         <li class="nav-item">
                             <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">
                                 <span class="material-symbols-outlined">login</span>
                             </a>
                         </li>
                         {% endif %}
-                        <li class="nav-item">
+                        <!--<li class="nav-item">
                             <a class="nav-link" href="{% url 'cart:cart_summary' %}">
                                 <span class="material-symbols-outlined position-relative">shopping_bag
                                     <span class="position-absolute top-100 start-100 translate-middle badge rounded-circle text-bg-secondary" style="bottom: -17.9px;">
@@ -78,7 +84,7 @@
                                     </span>
                                 </span>
                             </a>
-                        </li>
+                        </li>-->
                         <li class="nav-item me-1">
                             <a class="nav-link" data-bs-toggle="offcanvas" href="#offcanvasSearch" role="button" aria-controls="offcanvasSearch">
                                 <span class="material-symbols-outlined">search</span>

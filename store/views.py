@@ -4,7 +4,10 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
+from django.views.generic.edit import UpdateView
 
 from store.models import Painting, Artist
 from store.forms import SignUpForm
@@ -27,9 +30,16 @@ def gallery(request, page):
     return render(request, 'store/gallery.html', context)
 
 
-def artist(request):
+def artists(request):
     artists = Artist.objects.order_by('user__username')
     context = {'artists': artists, 'session': request.session, }
+    return render(request, 'store/artists.html', context)
+
+
+def artist(request, pk):
+    artist = get_object_or_404(Artist, pk=pk)
+    paintings = Painting.objects.filter(artist=pk)
+    context = {'artist': artist, 'paintings': paintings, }
     return render(request, 'store/artist.html', context)
 
 
@@ -56,14 +66,14 @@ def search(request):
                 "searched": searched,
             }
         else:
-            artists = Artist.objects.filter(user__username__contains=searched).order_by('user')
+            artist = Artist.objects.filter(user__username__contains=searched).order_by('user')
             paintings_name = Painting.objects.filter(name__contains=searched).order_by('-pub_date')
             paintings_category = Painting.objects.filter(category__contains=searched).order_by('-pub_date')
             paintings_artist = Painting.objects.filter(artist__user__username__contains=searched).order_by('-pub_date')
             paintings_technique = Painting.objects.filter(technique__name__contains=searched).order_by('-pub_date')
             paintings = paintings_name | paintings_category | paintings_artist | paintings_technique
             context = {
-                "artists": artists,
+                "artist": artist,
                 "paintings": paintings,
                 "searched": searched,
             }
@@ -79,13 +89,6 @@ def search(request):
         nums = "a" * paintings_p.paginator.num_pages
         context = {"paintings_all": paintings_all, "paintings_p": paintings_p, "nums": nums, }
         return render(request, 'store/gallery.html', context)
-
-
-def artist_detail(request, pk):
-    artist = get_object_or_404(Artist, pk=pk)
-    paintings = Painting.objects.filter(artist=pk)
-    context = {'artist': artist, 'paintings': paintings, }
-    return render(request, 'store/artist_detail.html', context)
 
 
 def painting_detail(request, pk):
@@ -109,10 +112,8 @@ def login_user(request):
 
         if user is not None:
             login(request, user)
-            # messages.success(request, "Log in correcto!.")
             return redirect('store:gallery', page=1)
         else:
-            # messages.error(request, "Usuario o password no encontrados")
             return redirect('store:login')
     else:
         context = {}
@@ -122,29 +123,4 @@ def login_user(request):
 def logout_user(request):
 
     logout(request)
-    # messages.success(request, "You have been logged out.")
     return redirect('store:index')
-
-
-def register_user(request):
-    form = SignUpForm()
-
-    if request.method == "POST":
-        form = SignUpForm(request.POST)
-        if form.is_valid():
-            form.save()
-            username = form.cleaned_data["username"]
-            password = form.cleaned_data["password1"]
-
-            # log in user.
-            user = authenticate(request, username=username, password=password)
-            login(request, user)
-            messages.success(request, "You have register successfully and log in")
-            return redirect('store:index')
-        else:
-            messages.success(request, "You have problem, please try again.")
-            context = {}
-            return redirect('store:register')
-    else:
-        context = {'form': form, }
-        return render(request, 'store/register.html', context)
