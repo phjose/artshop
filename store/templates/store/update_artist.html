@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+<div class="container-fluid py-5 taco" style="background-image: url(/../../media/background/bg-main-image-artist.jpg);">
+    <div class="container-fluid my-0 taco-espacio"></div>
+    <div class="container-fluid my-5 text-center taco-text">
+        <div class="row"></div>
+        <div class="col align-self-center">
+          <h2 class="user-select-none">Editar perfil: {{ user.artist|title }}</h2>
+        </div>
+    </div>
+</div>
+<form method="POST" action="{% url 'store:update_artist' user.artist.pk %}" enctype="multipart/form-data">
+{% csrf_token%}
+<div class="container px-4 px-lg-5 my-5">
+    <div class="row gx-4 gx-lg-5">
+        <div class="col-md-5 border border-dark rounded p-2 m-2">
+            <figure class="figure">
+                {% if user.artist.image %}
+                <img id="selectedImage" class="figure-img img-fluid rounded"  src="{{ user.artist.image.url }}" alt="{{ user.artist }}" />
+                {% else %}
+                <img class="figure-img img-fluid rounded" src="https://dummyimage.com/600x700/dee2e6/6c757d.jpg" alt="..." />
+                {% endif %}
+            </figure>
+            {{ artist_form.image }}
+        </div>
+        <div class="col-md-6 border border-dark rounded p-2 m-2">
+            <p class="lead">{{ artist_form.bio }}</p>
+            <p class="lead">{{ artist_form.url }}</p>
+            <p class="lead">{{ artist_form.inst_url }}</p>
+            <p class="lead">{{ artist_form.fcbk_url }}</p>
+            <p class="lead">{{ artist_form.x_url }}</p>
+            <hr class="my-2">
+            <div class="d-flex justify-content-end">
+                <a class="btn btn-secondary my-3 mx-1" href="{% url 'store:artist_detail' user.artist.id %}">Cancelar</a>
+                <button class="btn btn-primary my-3 mx-1">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
+</form>
+{% endblock %}

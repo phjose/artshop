@@ -4,13 +4,9 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from django.views.generic.list import ListView
-from django.views.generic.detail import DetailView
-from django.views.generic.edit import UpdateView
 
 from store.models import Painting, Artist
-from store.forms import SignUpForm
+from store.forms import SignUpForm, UpdateArtistForm, PaintingForm
 
 
 def index(request):
@@ -30,17 +26,52 @@ def gallery(request, page):
     return render(request, 'store/gallery.html', context)
 
 
+def artist_paintings(request, pk):
+    artist_paintings = Painting.objects.filter(artist=pk)
+    context = {'artist_paintings': artist_paintings}
+    return render(request, 'store/artist_paintings.html', context)
+
+
+def add_painting(request):
+    if request.method == 'POST':
+        painting_form = PaintingForm(request.POST)
+
+        if painting_form.is_valid():
+            painting_form.save()
+            return redirect(request, 'store/index.html', {})
+    else:
+        context = {'painting_form': PaintingForm}
+        return render(request, 'store/add_painting.html', context)
+
+
 def artists(request):
     artists = Artist.objects.order_by('user__username')
     context = {'artists': artists, 'session': request.session, }
     return render(request, 'store/artists.html', context)
 
 
-def artist(request, pk):
+def artist_detail(request, pk):
     artist = get_object_or_404(Artist, pk=pk)
     paintings = Painting.objects.filter(artist=pk)
     context = {'artist': artist, 'paintings': paintings, }
-    return render(request, 'store/artist.html', context)
+    return render(request, 'store/artist_detail.html', context)
+
+
+def update_artist(request, pk):
+
+    if request.user.is_authenticated:
+        current_user = User.objects.get(id=request.user.id)
+        current_artist = Artist.objects.get(pk=pk)
+        artist_form = UpdateArtistForm(request.POST or None, request.FILES or None, instance=current_artist)
+
+        if artist_form.is_valid():
+            artist_form.save()
+            login(request, current_user)
+            return redirect('store:artist_detail', pk=pk)
+        context = {'artist_form': artist_form, }
+        return render(request, 'store/update_artist.html', context)
+    else:
+        return redirect('store:index')
 
 
 def process(request):
@@ -112,7 +143,7 @@ def login_user(request):
 
         if user is not None:
             login(request, user)
-            return redirect('store:gallery', page=1)
+            return redirect('store:index')
         else:
             return redirect('store:login')
     else:

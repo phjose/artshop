@@ -21,12 +21,21 @@
                 {% endif %}
             </figure>
         </div>
-        <div class="col-md-6 rounded">
+        <div class="col-md-6">
             <h1 class="display-5 fw-bolder">{{ artist|title }}</h1>
             <hr class="hr" />
             <p class="lead">{{ artist.bio }}</p>
+            {% if artist.url %}
+            <a href="{{artist.url}}" target="_blank"><p class="lead">web</p></a>
+            {% endif %}
             {% if artist.inst_url %}
             <a href="{{artist.inst_url}}" target="_blank"><p class="lead">instagram</p></a>
+            {% endif %}
+            {% if artist.fcbk_url %}
+            <a href="{{artist.fcbk_url}}" target="_blank"><p class="lead">facebook</p></a>
+            {% endif %}
+            {% if artist.x_url %}
+            <a href="{{artist.x_url}}" target="_blank"><p class="lead">X</p></a>
             {% endif %}
         </div>
     </div>

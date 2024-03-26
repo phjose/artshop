@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+<div class="container-fluid py-5 taco" style="background-image: url(/../../media/background/bg-main-image-gallery.jpg);">
+    <div class="container-fluid my-0 taco-espacio"></div>
+    <div class="container-fluid my-5 text-center taco-text">
+        <div class="row"></div>
+        <div class="col align-self-center">
+            <!--<h2 class="user-select-none">GALERÍA</h2>-->
+        </div>
+    </div>
+</div>
+<div class="container-fluid d-flex border justify-content-center m-2">
+    <h1> - ADD PAINTINGS HERE - </h1>
+</div>
+<div class="container-fluid d-flex border justify-content-center m-2">
+    <form action="" method="POST">
+        {% csrf_token %}
+
+        {{ painting_form.as_p }}
+        <input type="submit" value="Submit" class="btn btn-secondary">
+    </form>
+</div>
+
+
+{% endblock %}

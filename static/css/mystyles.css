@@ -121,6 +121,11 @@ body {
   opacity: 0.85;
 }
 
+.painting-image {
+  height: 100px;
+  width: 100px;
+}
+
 .cart-image {
   height: 100px;
   width: 100px;

@@ -1,8 +1,52 @@
 from django import forms
+from django.forms import ModelForm
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from store.models import Artist, Painting
 
-from store.models import Artist
+
+class UpdateArtistForm(UserChangeForm):
+    password = None
+    #email = forms.EmailField(label="", widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Email Address'}))
+    #first_name = forms.CharField(label="", max_length=100, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First Name'}))
+    #last_name = forms.CharField(label="", max_length=100, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Last Name'}))
+
+    class Meta:
+        model = Artist
+        fields = ('bio', 'url', 'inst_url', 'fcbk_url', 'x_url', 'image')
+
+    def __init__(self, *args, **kwargs):
+        super(UpdateArtistForm, self).__init__(*args, **kwargs)
+
+        self.fields['bio'].widget.attrs['class'] = 'form-control'
+        self.fields['bio'].widget.attrs['placeholder'] = 'Bio'
+        self.fields['bio'].label = ''
+        self.fields['bio'].help_text = '<span class="form-text text-muted"><small>Not required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</small></span>'
+
+        self.fields['url'].widget.attrs['class'] = 'form-control'
+        self.fields['url'].widget.attrs['placeholder'] = 'URL Web'
+        self.fields['url'].label = ''
+
+        self.fields['inst_url'].widget.attrs['class'] = 'form-control'
+        self.fields['inst_url'].widget.attrs['placeholder'] = 'URL Instagram'
+        self.fields['inst_url'].label = ''
+
+        self.fields['fcbk_url'].widget.attrs['class'] = 'form-control'
+        self.fields['fcbk_url'].widget.attrs['placeholder'] = 'URL Facebook'
+        self.fields['fcbk_url'].label = ''
+
+        self.fields['x_url'].widget.attrs['class'] = 'form-control'
+        self.fields['x_url'].widget.attrs['placeholder'] = 'URL X'
+        self.fields['x_url'].label = ''
+
+
+class PaintingForm(ModelForm):
+    class Meta:
+        model = Painting
+        # fields = "__all__"
+        fields = ('name', 'description', 'support', 'technique', 'pheight', 'pwidth', 'category', 'price', 'available')
+
+
 
 
 class SignUpForm(UserCreationForm):
@@ -11,8 +55,8 @@ class SignUpForm(UserCreationForm):
     last_name = forms.CharField(label="", max_length=100, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Last Name'}))
 
     class Meta:
-       model = User
-       fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2')
+        model = User
+        fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2')
 
     def __init__(self, *args, **kwargs):
         super(SignUpForm, self).__init__(*args, **kwargs)

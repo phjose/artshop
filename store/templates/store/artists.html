@@ -14,11 +14,12 @@
         <div class="mx-1 my-1 p-0" style="width: 200px">
             {% if artist.image %}
             <!--<img class="img-fluid rounded-5 artist-img border border-black" src="{{ artist.image.url }}" alt="{{ artist }}">-->
-            <a href="{% url 'store:artist' artist.pk %}">
+            <a href="{% url 'store:artist_detail' artist.pk %}">
                 <img class="img-fluid object-fit-cover rounded" src="{{ artist.image.url }}" alt="{{ artist }}">
             </a>
             {% else %}
-            <img class="img-fluid object-fit-cover rounded" src="/../../media/background/bg-main-image-artist.jpg" alt="no image">
+            <!--<img class="img-fluid object-fit-cover rounded" src="/../../media/background/bg-main-image-artist.jpg" alt="no image">-->
+            <img class="figure-img img-fluid rounded" src="https://dummyimage.com/600x700/dee2e6/6c757d.jpg" alt="..." />
             {% endif %}
         </div>
         {% endfor %}
