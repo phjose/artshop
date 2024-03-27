@@ -55,7 +55,7 @@
 {% if related_paintings %}
 <section class="py-1">
     <div class="container px-4 px-lg-5 mt-3 text-center">
-        <h3 class="fw-bolder mb-4 pb-2 border-bottom border-dark">{{painting.artist|title}}</h3>
+        <h3 class="fw-bolder mb-4 pb-2 border-bottom border-dark">Otras obras de {{ painting.artist|title }}</h3>
         <div class="grid">
         {% for painting in related_paintings %}
             <div class="grid-item">

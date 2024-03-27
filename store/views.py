@@ -2,6 +2,7 @@ from django import forms
 from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth import authenticate, login, logout
+from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.contrib.auth.models import User
 
@@ -28,33 +29,47 @@ def gallery(request, page):
 
 def artist_paintings(request, pk):
     artist_paintings = Painting.objects.filter(artist=pk)
-    context = {'artist_paintings': artist_paintings}
+    context = {'artist_paintings': artist_paintings, 'artist_pk': pk}
     return render(request, 'store/artist_paintings.html', context)
 
 
 def add_painting(request):
-    if request.method == 'POST':
-        painting_form = PaintingForm(request.POST)
+    submitted = False
+    artist = request.user.artist
 
+    if request.method == 'POST':
+
+        painting_form = PaintingForm(request.POST, request.FILES)
         if painting_form.is_valid():
-            painting_form.save()
-            return redirect(request, 'store/index.html', {})
+            painting = painting_form.save(commit=False)
+            painting.artist = artist
+            painting.save()
+            artist_paintings = Painting.objects.filter(artist=artist.pk)
+            context = {'artist_paintings': artist_paintings, 'artist_pk': artist.pk, }
+            return render(request, 'store/artist_paintings.html', context)
+            # return HttpResponseRedirect('/artist_paintings/' + str(artist.pk) + '/')
     else:
-        context = {'painting_form': PaintingForm}
+        painting_form = PaintingForm
+        #if 'submitted' in request.GET:
+         #   submitted = True
+
+        #context = {'painting_form': painting_form, 'submitted': submitted}
+        context = {'painting_form': painting_form, }
         return render(request, 'store/add_painting.html', context)
 
 
-def artists(request):
-    artists = Artist.objects.order_by('user__username')
-    context = {'artists': artists, 'session': request.session, }
-    return render(request, 'store/artists.html', context)
+def update_painting(request, pk):
+    painting = Painting.objects.get(pk=pk)
+    artist = request.user.artist
+    painting_form = PaintingForm(request.POST or None, request.FILES or None, instance=painting)
 
-
-def artist_detail(request, pk):
-    artist = get_object_or_404(Artist, pk=pk)
-    paintings = Painting.objects.filter(artist=pk)
-    context = {'artist': artist, 'paintings': paintings, }
-    return render(request, 'store/artist_detail.html', context)
+    if painting_form.is_valid():
+        painting = painting_form.save(commit=False)
+        painting.artist = artist
+        painting.save()
+        return redirect('store:artist_paintings', pk=artist.pk)
+    context = {'painting': painting, 'painting_form': painting_form, }
+    return render(request, 'store/update_painting.html', context)
 
 
 def update_artist(request, pk):
@@ -72,6 +87,19 @@ def update_artist(request, pk):
         return render(request, 'store/update_artist.html', context)
     else:
         return redirect('store:index')
+
+
+def artists(request):
+    artists = Artist.objects.order_by('user__username')
+    context = {'artists': artists, 'session': request.session, }
+    return render(request, 'store/artists.html', context)
+
+
+def artist_detail(request, pk):
+    artist = get_object_or_404(Artist, pk=pk)
+    paintings = Painting.objects.filter(artist=pk)
+    context = {'artist': artist, 'paintings': paintings, }
+    return render(request, 'store/artist_detail.html', context)
 
 
 def process(request):

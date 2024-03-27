@@ -13,7 +13,7 @@ class UpdateArtistForm(UserChangeForm):
 
     class Meta:
         model = Artist
-        fields = ('bio', 'url', 'inst_url', 'fcbk_url', 'x_url', 'image')
+        fields = ('bio', 'web_url', 'inst_url', 'fcbk_url', 'x_url', 'image')
 
     def __init__(self, *args, **kwargs):
         super(UpdateArtistForm, self).__init__(*args, **kwargs)
@@ -23,9 +23,9 @@ class UpdateArtistForm(UserChangeForm):
         self.fields['bio'].label = ''
         self.fields['bio'].help_text = '<span class="form-text text-muted"><small>Not required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</small></span>'
 
-        self.fields['url'].widget.attrs['class'] = 'form-control'
-        self.fields['url'].widget.attrs['placeholder'] = 'URL Web'
-        self.fields['url'].label = ''
+        self.fields['web_url'].widget.attrs['class'] = 'form-control'
+        self.fields['web_url'].widget.attrs['placeholder'] = 'URL Web'
+        self.fields['web_url'].label = ''
 
         self.fields['inst_url'].widget.attrs['class'] = 'form-control'
         self.fields['inst_url'].widget.attrs['placeholder'] = 'URL Instagram'
@@ -41,12 +41,47 @@ class UpdateArtistForm(UserChangeForm):
 
 
 class PaintingForm(ModelForm):
+
     class Meta:
         model = Painting
         # fields = "__all__"
-        fields = ('name', 'description', 'support', 'technique', 'pheight', 'pwidth', 'category', 'price', 'available')
+        fields = ('name', 'description', 'support', 'technique', 'pheight', 'pwidth', 'category', 'price', 'available', 'image')
 
+    def __init__(self, *args, **kwargs):
+        super(PaintingForm, self).__init__(*args, **kwargs)
 
+        self.fields['name'].widget.attrs['class'] = 'form-control'
+        self.fields['name'].widget.attrs['placeholder'] = 'name'
+        self.fields['name'].label = 'Nombre'
+        self.fields['name'].help_text = '<span class="form-text"></span>'
+
+        self.fields['description'].widget.attrs['class'] = 'form-control'
+        self.fields['description'].widget.attrs['placeholder'] = 'descripcion'
+        self.fields['description'].label = 'Descripción'
+
+        self.fields['support'].widget.attrs['class'] = 'form-select'
+        self.fields['support'].label = 'Soporte'
+
+        self.fields['technique'].widget.attrs['class'] = 'form-select'
+        self.fields['technique'].label = 'Técnica'
+
+        self.fields['pheight'].widget.attrs['class'] = 'form-control'
+        self.fields['pheight'].label = 'Alto'
+
+        self.fields['pwidth'].widget.attrs['class'] = 'form-control'
+        self.fields['pwidth'].label = 'Ancho'
+
+        self.fields['category'].widget.attrs['class'] = 'form-control'
+        self.fields['category'].label = 'Categoría'
+
+        self.fields['price'].widget.attrs['class'] = 'form-control'
+        self.fields['price'].label = 'Precio'
+
+        self.fields['available'].widget.attrs['class'] = 'form-check-input'
+        self.fields['available'].label = 'Disponible'
+
+        self.fields['image'].widget.attrs['class'] = 'form-control'
+        self.fields['image'].label = 'Imagen'
 
 
 class SignUpForm(UserCreationForm):

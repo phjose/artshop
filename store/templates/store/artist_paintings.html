@@ -10,30 +10,66 @@
         </div>
     </div>
 </div>
-<div class="container-fluid my-3" style="overflow: hidden;">
-    <div class="table-responsive">
-        <table class="table table-hover align-middle">
-            <thead>
-                <tr>
-                    <th scope="col"></th>
-                    <th scope="col">NOMBRE</th>
-                    <th scope="col">FECHA PUB.</th>
-                    <th scope="col">PRECIO</th>
-                    <th scope="col">DISPONIBLE</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for artist_painting in artist_paintings %}
-                <tr>
-                    <td><img class="painting-image" src="{{ artist_painting.image.url }}" alt="{{ artist_painting.name }}"></td>
-                    <td>{{ artist_painting.name }}</td>
-                    <td>{{ artist_painting.pub_date }}</td>
-                    <td>{{ artist_painting.price }}</td>
-                    <td>{{ artist_painting.available }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+{% if user.is_authenticated %}
+    {% if user.artist.pk == artist_pk %}
+    <div class="container-fluid my-3" style="overflow: hidden;">
+        <div class="d-flex justify-content-start m-3">
+            <div class="row">
+                <a class="btn btn-primary" href="{% url 'store:add_painting' %}">Añadir Pintura</a>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle text-center">
+                <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">NOMBRE</th>
+                        <th scope="col">FECHA PUB.</th>
+                        <th scope="col">PRECIO</th>
+                        <th scope="col">DISPONIBLE</th>
+                        <th scope="col">ACCIONES</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for artist_painting in artist_paintings %}
+                    <tr>
+                        <td><img class="painting-image" src="{{ artist_painting.image.url }}" alt="{{ artist_painting.name }}"></td>
+                        <td><a href="{% url 'store:painting_detail' artist_painting.pk %}">{{ artist_painting.name }}</a></td>
+                        <td>{{ artist_painting.pub_date }}</td>
+                        <td>{{ artist_painting.price }}</td>
+                        <td>
+                            {% if artist_painting.available %}
+                            <span class="material-symbols-outlined">check</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <div>
+                                <a class="btn btn-info" href="{% url 'store:update_painting' artist_painting.pk %}">modificar</a>
+                                <a class="btn btn-danger" href="#">eliminar</a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
+    {% else %}
+    <div class="d-flex justify-content-center my-5">
+        <h1 class="m-5">
+            {{ user.artist.pk }} == {{artist_pk}}
+            Lo sentimos, solo el usuario propietario puede acceder a su lista de pinturas
+        </h1>
+    </div>
+    {% endif %}
+{% else %}
+<div class="d-flex justify-content-center my-5">
+    <h1 class="m-5">
+        Lo sentimos, necesitas estar
+        <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal">logado</a>
+        para acceder a este sitio.
+    </h1>
 </div>
+{% endif %}
+
 {% endblock %}

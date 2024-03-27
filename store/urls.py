@@ -11,9 +11,9 @@ urlpatterns = [
     path('painting/<int:pk>/', views.painting_detail, name='painting_detail'),
     # Artist painting list
     path('artist_paintings/<int:pk>/', views.artist_paintings, name='artist_paintings'),
-    # Add paintings from an Artist logged.
+    # Add, update, delete paintings from an Artist logged.
     path('add_painting/', views.add_painting, name='add_painting'),
-
+    path('update_painting/<int:pk>/', views.update_painting, name='update_painting'),
 
     # Listado publico de artistas
     path('artists/', views.artists, name='artists'),

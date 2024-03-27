@@ -6,10 +6,10 @@ from django.urls import reverse
 class Artist(models.Model):
     user = models.OneToOneField(User, blank=True, on_delete=models.CASCADE)
     bio = models.TextField(max_length=1000, blank=True, null=True)
-    inst_url = models.CharField(max_length=100, blank=True, null=True)
-    fcbk_url = models.CharField(max_length=100, blank=True, null=True)
-    x_url = models.CharField(max_length=100, blank=True, null=True)
-    url = models.CharField(max_length=100, blank=True, null=True)
+    inst_url = models.URLField(max_length=100, blank=True, null=True)
+    fcbk_url = models.URLField(max_length=100, blank=True, null=True)
+    x_url = models.URLField(max_length=100, blank=True, null=True)
+    web_url = models.URLField(max_length=100, blank=True, null=True)
     image = models.ImageField(upload_to='uploads/artist/', blank=True, null=True)
     sing_image = models.ImageField(upload_to='uploads/artist/', blank=True, null=True)
 
@@ -36,8 +36,8 @@ class Technique(models.Model):
 
 class Painting(models.Model):
     name = models.CharField(max_length=100)
-    description = models.CharField(max_length=300, default='', blank=True, null=True)
-    pub_date = models.DateField()
+    description = models.TextField(max_length=300, default='', blank=True, null=True)
+    pub_date = models.DateField(auto_now_add=True)
     support = models.ForeignKey(Support, on_delete=models.CASCADE, default=1)
     artist = models.ForeignKey(Artist, on_delete=models.CASCADE, default=1)
     technique = models.ForeignKey(Technique, on_delete=models.CASCADE, default=1)

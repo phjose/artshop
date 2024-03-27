@@ -173,8 +173,8 @@
                 {% if user.id == 1 %}
                 <li class="nav-item"><a class="nav-link" href="{% url 'admin:index' %}">Admin</a></li>
                 {% else %}
-                <li class="nav-item"><a class="nav-link" href="{% url 'store:update_artist' user.artist.pk %}">Update profile</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'store:artist_paintings' user.artist.pk %}">Paintings</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'store:update_artist' user.artist.pk %}">Editar perfil</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'store:artist_paintings' user.artist.pk %}">Tus pinturas</a></li>
                 {% endif %}
                 <li class="nav-item"><a class="nav-link" href="{% url 'store:logout' %}">Logout</a></li>
             </ul>

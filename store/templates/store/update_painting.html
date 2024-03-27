@@ -10,11 +10,19 @@
         </div>
     </div>
 </div>
-<form method="POST" action="" enctype="multipart/form-data">
+<form method="POST" action="{% url 'store:update_painting' painting.pk %}" enctype="multipart/form-data">
 {% csrf_token%}
 <div class="container px-4 px-lg-5 my-5">
     <div class="row gx-4 gx-lg-5">
         <div class="col-md-5 border-end">
+            <figure class="figure">
+                {% if painting.image %}
+                <img class="figure-img img-fluid rounded"  src="{{ painting.image.url }}" alt="{{ painting }}" id="zoom"/>
+                <!--</a>-->
+                {% else %}
+                <img class="figure-img img-fluid rounded" src="https://dummyimage.com/600x700/dee2e6/6c757d.jpg" alt="..." />
+                {% endif %}
+            </figure>
             {{ painting_form.image }}
         </div>
         <div class="col-md-6 ">
@@ -29,31 +37,11 @@
             <p class="lead">{{ painting_form.available }}</p>
             <hr class="my-2">
             <div class="d-flex justify-content-end">
-                <a class="btn btn-secondary my-3 mx-1" href="{% url 'store:artist_paintings' user.artist.pk %}">Cancelar</a>
-                <button class="btn btn-primary my-3 mx-1">Crear</button>
+                <a class="btn btn-secondary my-3 mx-1" href="{% url 'store:painting_detail' painting.pk %}">Cancelar</a>
+                <button class="btn btn-primary my-3 mx-1">Update</button>
             </div>
         </div>
     </div>
 </div>
 </form>
-
-
-<!--<div class="container-fluid d-flex border justify-content-center m-2">
-    <h1> - ADD PAINTINGS HERE - </h1>
-</div>
-{% if submitted %}
-   Añadido correctamente.
-{% else %}
-<div class="container-fluid d-flex border justify-content-center m-2">
-    <form action="" method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-
-        {{ painting_form.as_p }}
-        <input type="submit" value="Submit" class="btn btn-secondary">
-    </form>
-</div>
-
-{% endif %}-->
-
-
 {% endblock %}
