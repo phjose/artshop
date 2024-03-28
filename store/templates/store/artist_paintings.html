@@ -22,7 +22,7 @@
             <table class="table table-hover align-middle text-center">
                 <thead>
                     <tr>
-                        <th scope="col"></th>
+                        <th scope="col">IMAGEN</th>
                         <th scope="col">NOMBRE</th>
                         <th scope="col">FECHA PUB.</th>
                         <th scope="col">PRECIO</th>
@@ -34,7 +34,9 @@
                     {% for artist_painting in artist_paintings %}
                     <tr>
                         <td><img class="painting-image" src="{{ artist_painting.image.url }}" alt="{{ artist_painting.name }}"></td>
-                        <td><a href="{% url 'store:painting_detail' artist_painting.pk %}">{{ artist_painting.name }}</a></td>
+                        <td>
+                            <a class="link-secondary link-offset-2 link-underline-opacity-0 link-underline-opacity-50-hover" href="{% url 'store:painting_detail' artist_painting.pk %}">{{ artist_painting.name }}</a>
+                        </td>
                         <td>{{ artist_painting.pub_date }}</td>
                         <td>{{ artist_painting.price }}</td>
                         <td>
@@ -43,9 +45,14 @@
                             {% endif %}
                         </td>
                         <td>
-                            <div>
-                                <a class="btn btn-info" href="{% url 'store:update_painting' artist_painting.pk %}">modificar</a>
-                                <a class="btn btn-danger" href="#">eliminar</a>
+                            <div class="btn-group">
+                                <a class="btn btn-info btn-sm" href="{% url 'store:update_painting' artist_painting.pk %}">modificar</a>
+                                <button type="button" class="btn btn-info btn-sm dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="visually-hidden">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#deleteModal" data-bs-whatever="{%url 'store:delete_painting' artist_painting.pk %}">eliminar</a></li>
+                                </ul>
                             </div>
                         </td>
                     </tr>
@@ -56,20 +63,38 @@
     </div>
     {% else %}
     <div class="d-flex justify-content-center my-5">
-        <h1 class="m-5">
-            {{ user.artist.pk }} == {{artist_pk}}
+        <h3 class="m-5">
             Lo sentimos, solo el usuario propietario puede acceder a su lista de pinturas
-        </h1>
+        </h3>
     </div>
     {% endif %}
 {% else %}
 <div class="d-flex justify-content-center my-5">
-    <h1 class="m-5">
+    <h3 class="m-5">
         Lo sentimos, necesitas estar
         <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal">logado</a>
         para acceder a este sitio.
-    </h1>
+    </h3>
 </div>
 {% endif %}
+
+<!-- Modal -->
+<div class="modal fade" tabindex="-1" id="deleteModal">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Eliminar Pintura</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>¿Realmente quieres eliminar la pintura?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <a class="btn btn-primary delete-href" href="">Eliminar</a>
+      </div>
+    </div>
+  </div>
+</div>
 
 {% endblock %}

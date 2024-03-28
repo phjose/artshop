@@ -25,7 +25,7 @@
             <h1 class="display-5 fw-bolder">{{ artist|title }}</h1>
             <hr class="hr" />
             <p class="lead">{{ artist.bio }}</p>
-            {% if artist.url %}
+            {% if artist.web_url %}
             <a href="{{artist.web_url}}" target="_blank"><p class="lead">web</p></a>
             {% endif %}
             {% if artist.inst_url %}

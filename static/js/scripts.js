@@ -175,4 +175,26 @@ $(document).ready(function(){
 });
 // CART
 
+// DELETE PAINTINGS
+$(document).ready(function(){
+    const deleteModal = document.getElementById('deleteModal')
+    if (deleteModal) {
+      deleteModal.addEventListener('show.bs.modal', event => {
+        // Button that triggered the modal
+        const button = event.relatedTarget
+        // Extract info from data-bs-* attributes
+        const redirectTo = button.getAttribute('data-bs-whatever')
+        // If necessary, you could initiate an Ajax request here
+        // and then do the updating in a callback.
+
+        // Update the modal's content.
+        const modalHref = deleteModal.querySelector('.delete-href')
+
+        modalHref.href = redirectTo
+      })
+    }
+})
+// DELETE PAINTINGS
+
+
 

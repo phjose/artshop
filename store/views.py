@@ -72,6 +72,16 @@ def update_painting(request, pk):
     return render(request, 'store/update_painting.html', context)
 
 
+def delete_painting(request, pk):
+    artist = request.user.artist
+    painting = Painting.objects.get(pk=pk)
+    if request.user.is_authenticated and artist.pk == painting.artist.pk:
+        painting.delete()
+        return redirect('store:artist_paintings', pk=artist.pk)
+
+    return redirect('store:update_painting', pk=pk)
+
+
 def update_artist(request, pk):
 
     if request.user.is_authenticated:
@@ -83,7 +93,7 @@ def update_artist(request, pk):
             artist_form.save()
             login(request, current_user)
             return redirect('store:artist_detail', pk=pk)
-        context = {'artist_form': artist_form, }
+        context = {'artist_form': artist_form, 'current_artist': current_artist, }
         return render(request, 'store/update_artist.html', context)
     else:
         return redirect('store:index')
